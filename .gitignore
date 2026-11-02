@@ -11,3 +11,5 @@ viewer/
 **/.cache/
 site/.cache-screens/
 *.glb.tmp
+site/samples/
+site/.cache-screens/

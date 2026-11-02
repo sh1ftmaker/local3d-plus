@@ -24,6 +24,7 @@ jobs:
           mkdir -p _site
           if [ -d site ]; then cp -r site/. _site/; else echo '<!doctype html><title>TRELLIS+</title><p>Viewer coming soon.</p>' > _site/index.html; fi
           rm -rf _site/.cache-screens
+          rm -rf _site/samples
           if [ -d samples ]; then cp -r samples _site/samples; fi
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5

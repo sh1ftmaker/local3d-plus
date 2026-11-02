@@ -1,0 +1,38 @@
+{
+ "id": "viking_wolf_rune_axe_plus_pixal3d_C_replace",
+ "label": "TRELLIS+ photo projection: replace",
+ "tag": "plus_pixal3d_C_replace",
+ "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/model.glb",
+ "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/crop.jpg",
+ "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/mask.png",
+ "meta": {
+  "preset": "plus",
+  "model": "pixal3d",
+  "seed": 42,
+  "overrides": {
+   "project_mode": "replace",
+   "sharpen": 0
+  },
+  "seconds": 406.3,
+  "fov": 38.20699635086812
+ },
+ "stats": {
+  "verts": 229048,
+  "faces": 460798,
+  "boundary_edges": 61,
+  "nonmanifold_edges": 815,
+  "tri_quality_mean": 0.8566498184838017,
+  "slivers_pct": 0.24826496642780566,
+  "psnr": 16.2115,
+  "hf_corr": -0.0402,
+  "silhouette_iou": 0.9635,
+  "full_res_faces": 460798
+ },
+ "renders": [
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/turntable.jpg",
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/front_compare.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 6339636,
+ "created": "2026-11-02T19:13:22.931982+00:00"
+}

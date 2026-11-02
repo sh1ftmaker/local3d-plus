@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1013">
+<script>/* relative URLs need a trailing slash on the mount path (/lp/<port>/) */
+if (!/\/$|\.html$/.test(location.pathname)) location.replace(location.pathname + '/' + location.search + location.hash);</script>
+<title>TRELLIS+ Results</title>
+<meta name="description" content="Input images vs generated 3D models from the TRELLIS.2 / Pixal3D pipeline with TRELLIS+ mods.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 28 10v12L16 29 4 22V10z' fill='%236cb6ff'/%3E%3Cpath d='M16 3v26M4 10l24 12M28 10 4 22' stroke='%230e1013' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="on-home">
+<canvas id="gl" aria-hidden="true"></canvas>
+
+<header id="top">
+  <button id="menuBtn" class="icon-btn only-narrow" aria-label="Runs">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <span id="menuBadge" class="dot-badge" hidden></span>
+  </button>
+  <a id="homeLink" class="brand" href="#">
+    <svg viewBox="0 0 32 32" class="logo"><path d="M16 3 28 10v12L16 29 4 22V10z"/><path class="cut" d="M16 3v26M4 10l24 12M28 10 4 22"/></svg>
+    <span>TRELLIS+<b>results</b></span>
+  </a>
+  <div class="spacer"></div>
+  <span id="updated" class="muted tiny hide-xs"></span>
+  <span id="live" class="live"><i></i><span>loading</span></span>
+  <button id="aboutBtn" class="text-btn about-btn">About</button>
+</header>
+
+<div id="shell">
+  <aside id="sidebar">
+    <div class="drawer-top only-narrow"><b>Inputs &amp; runs</b><button id="drawerClose" class="icon-btn" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div id="thumbStrip" class="thumb-strip only-narrow"></div>
+    <div class="side-head">
+      <input id="search" type="search" placeholder="Filter inputs / tags" autocomplete="off">
+      <button id="markSeen" class="text-btn" title="Clear NEW badges">Mark seen</button>
+    </div>
+    <div id="groups" class="groups"></div>
+    <div id="reportsWrap" class="reports-wrap" hidden>
+      <h3>Reports</h3>
+      <div id="reports" class="reports"></div>
+    </div>
+    <div class="side-foot only-narrow">
+      <button id="drawerDone" class="primary-btn">Show compare</button>
+    </div>
+  </aside>
+  <div id="scrim" class="only-narrow"></div>
+
+  <main id="main">
+    <section id="home">
+      <div class="home-head">
+        <h1>Inputs</h1>
+        <p class="muted" id="homeSummary"></p>
+      </div>
+      <div id="gallery" class="gallery"></div>
+    </section>
+
+    <section id="compare" hidden>
+      <div id="runBar" class="run-bar phone-only">
+        <div id="runTabs" class="run-tabs" role="tablist"></div>
+        <button id="abBtn" class="ab-btn" aria-label="Flick between last two runs">A/B</button>
+        <button id="addRunBtn" class="ab-btn" aria-label="Add or change runs">＋</button>
+      </div>
+
+      <div id="toolbar" class="toolbar" role="toolbar">
+        <div class="sheet-head phone-only"><b>View options</b><button id="sheetDone" class="primary-btn">Done</button></div>
+        <div class="tb-group"><span class="tb-label">Shading</span>
+          <div class="seg" data-key="mode">
+            <button data-v="textured">Textured</button><button data-v="clay">Clay</button><button data-v="wire">Wire</button>
+          </div>
+          <button class="tog" data-key="wire">Wire overlay</button>
+          <button class="tog" data-key="normals">Normal map</button>
+        </div>
+        <div class="tb-group"><span class="tb-label">Lighting</span>
+          <div class="seg" data-key="light">
+            <button data-v="studio">Studio</button><button data-v="matcap">Matcap</button><button data-v="unlit">Unlit</button>
+          </div>
+          <div class="seg" data-key="bg" aria-label="Background">
+            <button data-v="dark" aria-label="Dark background"><i class="sw" style="background:#15181d"></i></button><button data-v="grey" aria-label="Grey background"><i class="sw" style="background:#5a5f66"></i></button><button data-v="light" aria-label="Light background"><i class="sw" style="background:#e9ebee"></i></button>
+          </div>
+        </div>
+        <div class="tb-group"><span class="tb-label">Camera</span>
+          <button class="tog" data-key="autoRotate">Auto-rotate</button>
+          <button id="matchCam" class="act">Match input camera</button>
+          <button id="frameBtn" class="act">Frame</button>
+          <div class="seg compact" id="views">
+            <button data-view="front" aria-label="Front view">F</button><button data-view="right" aria-label="Right view">R</button><button data-view="back" aria-label="Back view">B</button><button data-view="left" aria-label="Left view">L</button><button data-view="top" aria-label="Top view">T</button>
+          </div>
+        </div>
+        <div class="tb-group"><span class="tb-label">Photo overlay</span>
+          <button class="tog" data-key="photoInPanes">Photo in panes</button>
+          <div class="seg refsrc phone-only"><button data-v="crop">Crop</button><button data-v="input">Input</button><button data-v="mask">Mask</button></div>
+          <button class="tog ov-outline phone-only">Mask outline</button>
+          <label class="lbl phone-only">FOV° <input class="fov-input" type="number" step="0.1" min="5" max="120" inputmode="decimal"></label>
+          <span class="fov-note muted tiny phone-only"></span>
+        </div>
+        <div class="tb-group desktop-only"><span class="tb-label">Layout</span>
+          <button id="colsBtn" class="act">Cols: auto</button>
+        </div>
+      </div>
+
+      <div class="cmp">
+        <div id="refPanel" class="ref card">
+          <div class="card-head">
+            <button id="refFold" class="pane-btn" title="Collapse / expand input panel" aria-label="Collapse input panel">▾</button>
+            <div class="title-line"><span id="refTitle" class="ttl"></span></div>
+            <div class="seg small refsrc" id="refSrc">
+              <button data-v="crop">Crop</button><button data-v="input">Input</button><button data-v="mask">Mask</button>
+            </div>
+          </div>
+          <div id="refSlot" class="slot ref-slot">
+            <img id="refImg" alt="input" draggable="false">
+            <div id="refHint" class="slot-note"></div>
+          </div>
+          <div class="ref-ctl">
+            <div class="row">
+              <div class="seg small ovmode" id="ovMode"><button data-v="fade">Fade</button><button data-v="wipe">Wipe</button></div>
+              <input id="ovSlider" class="ov-slider" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="Photo / model blend">
+              <button id="ovOutline" class="tog small ov-outline">Outline</button>
+            </div>
+            <div class="row">
+              <label class="lbl">Model <select id="refModel"></select></label>
+              <label class="lbl">FOV° <input id="fovInput" class="fov-input" type="number" step="0.1" min="5" max="120" inputmode="decimal"></label>
+              <span id="fovNote" class="fov-note muted tiny"></span>
+            </div>
+          </div>
+        </div>
+
+        <div id="panes" class="panes"></div>
+      </div>
+
+      <div id="phOv" class="ph-ov phone-only" hidden>
+        <div class="seg ovmode"><button data-v="fade">Fade</button><button data-v="wipe">Wipe</button></div>
+        <input class="ov-slider" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="Photo / model blend">
+        <button class="tog ov-outline">Outline</button>
+      </div>
+
+      <div class="card stats-card">
+        <div class="card-head"><span class="ttl">Stats</span><span class="muted tiny">browser-computed after load; GLB header counts before</span></div>
+        <div class="table-wrap"><table id="statsTable" class="stats"></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+
+<nav id="bottomBar" class="bottom-bar phone-only" aria-label="Viewer controls">
+  <button data-mode="textured"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M5 9c4 2 10 2 14 0M5 15c4-2 10-2 14 0"/></svg><span>Textured</span></button>
+  <button data-mode="clay"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.5 8.5a5 5 0 0 1 4-1.5"/></svg><span>Clay</span></button>
+  <button data-mode="wire"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M6 4v16M12 4v16M18 4v16"/></svg><span>Wire</span></button>
+  <button id="bbMatch"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 7l1.5-3h5L16 7"/></svg><span>Camera</span></button>
+  <button id="bbRotate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4h-4"/></svg><span>Rotate</span></button>
+  <button id="bbOverlay"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="12" height="12" rx="2"/><rect x="9" y="9" width="12" height="12" rx="2"/></svg><span>Overlay</span></button>
+  <button id="bbMore"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>More</span></button>
+</nav>
+<div id="sheetScrim" class="sheet-scrim"></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<div id="about" class="modal" hidden>
+  <div class="modal-box" role="dialog" aria-labelledby="aboutTitle">
+    <div class="modal-head"><h2 id="aboutTitle">About</h2><button class="icon-btn about-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <p>Side-by-side results of an image-to-3D pipeline: <b>TRELLIS.2 / Pixal3D</b> running in ComfyUI, with and without the <b>TRELLIS+</b> node pack.</p>
+    <ul>
+      <li><b>baseline</b>: the stock ComfyUI template settings.</li>
+      <li><b>plus</b>: TRELLIS+ mods: mesh repair, QEF remesh with shell cleanup, feature-weighted decimation, isotropic remesh, photo-to-texture projection, texture enhance, plus more sampling steps.</li>
+      <li><b>quad</b>: adds Instant-Meshes quad retopology (OBJ with real quads).</li>
+    </ul>
+    <p>Models here are web-optimised (decimated, meshopt-compressed, WebP textures ≤ 2048 px); the stats table also lists the full-resolution numbers. Pixal3D is pixel-aligned, so <i>Match input camera</i> plus <i>Overlay</i> lines the model up with the conditioning crop.</p>
+    <p>Controls: drag to orbit, pinch or scroll to zoom, two fingers or right-drag to pan, double-tap to frame.</p>
+    <p><a class="repo-link" href="https://github.com/sh1ftmaker/trellis-plus" target="_blank" rel="noopener">github.com/sh1ftmaker/trellis-plus</a></p>
+  </div>
+</div>
+<div id="lightbox" class="lightbox" hidden><img alt=""><div class="lb-cap"></div></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

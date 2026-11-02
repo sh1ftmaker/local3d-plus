@@ -1,0 +1,35 @@
+{
+ "id": "viking_wolf_rune_axe_baseline_pixal3d_F",
+ "label": "Stock template (baseline)",
+ "tag": "baseline_pixal3d_F",
+ "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/model.glb",
+ "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/crop.jpg",
+ "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/mask.png",
+ "meta": {
+  "preset": "baseline",
+  "model": "pixal3d",
+  "seed": 42,
+  "overrides": {},
+  "seconds": 258.7,
+  "fov": 38.20699635086812
+ },
+ "stats": {
+  "verts": 348654,
+  "faces": 699390,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 851,
+  "tri_quality_mean": 0.8121585214184,
+  "slivers_pct": 0.07620926807646664,
+  "psnr": 16.8898,
+  "hf_corr": 0.0596,
+  "silhouette_iou": 0.969,
+  "full_res_faces": 699390
+ },
+ "renders": [
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/turntable.jpg",
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/front_compare.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 6861420,
+ "created": "2026-11-02T19:26:23.614050+00:00"
+}

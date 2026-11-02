@@ -1,0 +1,24 @@
+{
+ "id": "goblin_merchant_baseline_pixal3d",
+ "label": "Stock template (baseline)",
+ "tag": "baseline_pixal3d",
+ "glb": "goblin_merchant/goblin_merchant_baseline_pixal3d/model.glb",
+ "crop": null,
+ "mask": null,
+ "meta": {},
+ "stats": {
+  "verts": 341423,
+  "faces": 697524,
+  "boundary_edges": 6,
+  "nonmanifold_edges": 5976,
+  "tri_quality_mean": 0.79103891106225,
+  "slivers_pct": 0.05175449160172267,
+  "full_res_faces": 697524
+ },
+ "renders": [
+  "goblin_merchant/goblin_merchant_baseline_pixal3d/turntable.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 8312252,
+ "created": "2026-11-02T18:43:09.064460+00:00"
+}

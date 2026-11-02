@@ -1,0 +1,24 @@
+{
+ "id": "viking_wolf_rune_axe_plus_pixal3d",
+ "label": "TRELLIS+ (first plus run)",
+ "tag": "plus_pixal3d",
+ "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d/model.glb",
+ "crop": null,
+ "mask": null,
+ "meta": {},
+ "stats": {
+  "verts": 229571,
+  "faces": 461942,
+  "boundary_edges": 54,
+  "nonmanifold_edges": 866,
+  "tri_quality_mean": 0.8566814807616485,
+  "slivers_pct": 0.2517632083681501,
+  "full_res_faces": 461942
+ },
+ "renders": [
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d/turntable.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 6465732,
+ "created": "2026-11-02T18:39:00.012465+00:00"
+}

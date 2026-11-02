@@ -1,0 +1,329 @@
+{
+ "generated": "2026-11-02T20:01:26.906663+00:00",
+ "inputs": [
+  {
+   "id": "goblin_merchant",
+   "title": "Goblin Merchant",
+   "image": "goblin_merchant/input.jpg",
+   "thumb": "goblin_merchant/thumb.jpg",
+   "runs": [
+    {
+     "id": "goblin_merchant_baseline_pixal3d",
+     "label": "Stock template (baseline)",
+     "tag": "baseline_pixal3d",
+     "glb": "goblin_merchant/goblin_merchant_baseline_pixal3d/model.glb",
+     "crop": null,
+     "mask": null,
+     "meta": {},
+     "stats": {
+      "verts": 341423,
+      "faces": 697524,
+      "boundary_edges": 6,
+      "nonmanifold_edges": 5976,
+      "tri_quality_mean": 0.79103891106225,
+      "slivers_pct": 0.05175449160172267,
+      "full_res_faces": 697524
+     },
+     "renders": [
+      "goblin_merchant/goblin_merchant_baseline_pixal3d/turntable.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 8312252,
+     "created": "2026-11-02T18:43:09.064460+00:00"
+    },
+    {
+     "id": "goblin_merchant_plus_pixal3d_default",
+     "label": "TRELLIS+ defaults",
+     "tag": "plus_pixal3d_default",
+     "glb": "goblin_merchant/goblin_merchant_plus_pixal3d_default/model.glb",
+     "crop": "goblin_merchant/goblin_merchant_plus_pixal3d_default/crop.jpg",
+     "mask": "goblin_merchant/goblin_merchant_plus_pixal3d_default/mask.png",
+     "meta": {
+      "preset": "plus",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {},
+      "seconds": 876.4,
+      "fov": 31.402294211052055
+     },
+     "stats": {
+      "verts": 237669,
+      "faces": 493454,
+      "boundary_edges": 101,
+      "nonmanifold_edges": 5921,
+      "tri_quality_mean": 0.8494986355510089,
+      "slivers_pct": 0.1669861831092665,
+      "psnr": 17.246,
+      "hf_corr": 0.1777,
+      "silhouette_iou": 0.9745,
+      "full_res_faces": 493454
+     },
+     "renders": [
+      "goblin_merchant/goblin_merchant_plus_pixal3d_default/turntable.jpg",
+      "goblin_merchant/goblin_merchant_plus_pixal3d_default/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 7213284,
+     "created": "2026-11-02T19:41:04.512987+00:00"
+    }
+   ]
+  },
+  {
+   "id": "viking_wolf_rune_axe",
+   "title": "Viking Wolf Rune Axe",
+   "image": "viking_wolf_rune_axe/input.jpg",
+   "thumb": "viking_wolf_rune_axe/thumb.jpg",
+   "runs": [
+    {
+     "id": "viking_wolf_rune_axe_baseline_pixal3d",
+     "label": "Stock template (baseline)",
+     "tag": "baseline_pixal3d",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d/model.glb",
+     "crop": null,
+     "mask": null,
+     "meta": {},
+     "stats": {
+      "verts": 348670,
+      "faces": 699398,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 832,
+      "tri_quality_mean": 0.8122856098729493,
+      "slivers_pct": 0.07449263509475292,
+      "full_res_faces": 699398
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d/turntable.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6881776,
+     "created": "2026-11-02T18:20:02.447673+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d",
+     "label": "TRELLIS+ (first plus run)",
+     "tag": "plus_pixal3d",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d/model.glb",
+     "crop": null,
+     "mask": null,
+     "meta": {},
+     "stats": {
+      "verts": 229571,
+      "faces": 461942,
+      "boundary_edges": 54,
+      "nonmanifold_edges": 866,
+      "tri_quality_mean": 0.8566814807616485,
+      "slivers_pct": 0.2517632083681501,
+      "full_res_faces": 461942
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d/turntable.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6465732,
+     "created": "2026-11-02T18:39:00.012465+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d_A_gen",
+     "label": "TRELLIS+ mesh mods, no photo projection",
+     "tag": "plus_pixal3d_A_gen",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_A_gen/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_A_gen/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_A_gen/mask.png",
+     "meta": {
+      "preset": "plus",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {
+       "project_mode": "off",
+       "sharpen": 0
+      },
+      "seconds": 459.9,
+      "fov": 38.20699635086812
+     },
+     "stats": {
+      "verts": 229279,
+      "faces": 461348,
+      "boundary_edges": 37,
+      "nonmanifold_edges": 853,
+      "tri_quality_mean": 0.8562759340536851,
+      "slivers_pct": 0.25382141030198463,
+      "psnr": 14.6801,
+      "hf_corr": 0.0393,
+      "silhouette_iou": 0.9634,
+      "full_res_faces": 461348
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_A_gen/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_A_gen/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6340308,
+     "created": "2026-11-02T18:58:41.691937+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d_B_detail",
+     "label": "TRELLIS+ photo projection: detail",
+     "tag": "plus_pixal3d_B_detail",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_B_detail/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_B_detail/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_B_detail/mask.png",
+     "meta": {
+      "preset": "plus",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {
+       "project_mode": "detail",
+       "sharpen": 0
+      },
+      "seconds": 466.5,
+      "fov": 38.20699635086812
+     },
+     "stats": {
+      "verts": 229718,
+      "faces": 462214,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 837,
+      "tri_quality_mean": 0.8563958913734434,
+      "slivers_pct": 0.2645960529105566,
+      "psnr": 14.6098,
+      "hf_corr": -0.0201,
+      "silhouette_iou": 0.9636,
+      "full_res_faces": 462214
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_B_detail/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_B_detail/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6361968,
+     "created": "2026-11-02T19:06:34.210039+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d_C_replace",
+     "label": "TRELLIS+ photo projection: replace",
+     "tag": "plus_pixal3d_C_replace",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/mask.png",
+     "meta": {
+      "preset": "plus",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {
+       "project_mode": "replace",
+       "sharpen": 0
+      },
+      "seconds": 406.3,
+      "fov": 38.20699635086812
+     },
+     "stats": {
+      "verts": 229048,
+      "faces": 460798,
+      "boundary_edges": 61,
+      "nonmanifold_edges": 815,
+      "tri_quality_mean": 0.8566498184838017,
+      "slivers_pct": 0.24826496642780566,
+      "psnr": 16.2115,
+      "hf_corr": -0.0402,
+      "silhouette_iou": 0.9635,
+      "full_res_faces": 460798
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6339636,
+     "created": "2026-11-02T19:13:22.931982+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d_D_detail_sharp",
+     "label": "TRELLIS+ detail projection + sharpen",
+     "tag": "plus_pixal3d_D_detail_sharp",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_D_detail_sharp/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_D_detail_sharp/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_D_detail_sharp/mask.png",
+     "meta": {
+      "preset": "plus",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {
+       "project_mode": "detail",
+       "sharpen": 0.4
+      },
+      "seconds": 514.4,
+      "fov": 38.20699635086812
+     },
+     "stats": {
+      "verts": 229809,
+      "faces": 462350,
+      "boundary_edges": 51,
+      "nonmanifold_edges": 829,
+      "tri_quality_mean": 0.8563918511072184,
+      "slivers_pct": 0.24288958581161457,
+      "psnr": 14.3797,
+      "hf_corr": -0.0311,
+      "silhouette_iou": 0.9635,
+      "full_res_faces": 462350
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_D_detail_sharp/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_D_detail_sharp/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6496380,
+     "created": "2026-11-02T19:21:59.894274+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_baseline_pixal3d_F",
+     "label": "Stock template (baseline)",
+     "tag": "baseline_pixal3d_F",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/mask.png",
+     "meta": {
+      "preset": "baseline",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {},
+      "seconds": 258.7,
+      "fov": 38.20699635086812
+     },
+     "stats": {
+      "verts": 348654,
+      "faces": 699390,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 851,
+      "tri_quality_mean": 0.8121585214184,
+      "slivers_pct": 0.07620926807646664,
+      "psnr": 16.8898,
+      "hf_corr": 0.0596,
+      "silhouette_iou": 0.969,
+      "full_res_faces": 699390
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_baseline_pixal3d_F/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 6861420,
+     "created": "2026-11-02T19:26:23.614050+00:00"
+    }
+   ]
+  }
+ ],
+ "reports": [
+  {
+   "title": "axe baseline",
+   "image": "reports/axe_baseline.jpg"
+  },
+  {
+   "title": "axe cmp",
+   "image": "reports/axe_cmp.jpg"
+  },
+  {
+   "title": "goblin baseline",
+   "image": "reports/goblin_baseline.jpg"
+  }
+ ]
+}

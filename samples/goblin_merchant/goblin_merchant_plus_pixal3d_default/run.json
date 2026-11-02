@@ -1,0 +1,35 @@
+{
+ "id": "goblin_merchant_plus_pixal3d_default",
+ "label": "TRELLIS+ defaults",
+ "tag": "plus_pixal3d_default",
+ "glb": "goblin_merchant/goblin_merchant_plus_pixal3d_default/model.glb",
+ "crop": "goblin_merchant/goblin_merchant_plus_pixal3d_default/crop.jpg",
+ "mask": "goblin_merchant/goblin_merchant_plus_pixal3d_default/mask.png",
+ "meta": {
+  "preset": "plus",
+  "model": "pixal3d",
+  "seed": 42,
+  "overrides": {},
+  "seconds": 876.4,
+  "fov": 31.402294211052055
+ },
+ "stats": {
+  "verts": 237669,
+  "faces": 493454,
+  "boundary_edges": 101,
+  "nonmanifold_edges": 5921,
+  "tri_quality_mean": 0.8494986355510089,
+  "slivers_pct": 0.1669861831092665,
+  "psnr": 17.246,
+  "hf_corr": 0.1777,
+  "silhouette_iou": 0.9745,
+  "full_res_faces": 493454
+ },
+ "renders": [
+  "goblin_merchant/goblin_merchant_plus_pixal3d_default/turntable.jpg",
+  "goblin_merchant/goblin_merchant_plus_pixal3d_default/front_compare.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 7213284,
+ "created": "2026-11-02T19:41:04.512987+00:00"
+}
