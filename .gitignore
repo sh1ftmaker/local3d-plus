@@ -1,0 +1,13 @@
+# weights and local pipeline artefacts (large, stay on this machine)
+models/
+outputs/
+logs/
+test_inputs/
+reports/front/
+reports/*.png
+viewer/
+**/__pycache__/
+**/node_modules/
+**/.cache/
+site/.cache-screens/
+*.glb.tmp

@@ -1,0 +1,34 @@
+name: Deploy viewer to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", "samples/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble site + samples
+        run: |
+          mkdir -p _site
+          if [ -d site ]; then cp -r site/. _site/; else echo '<!doctype html><title>TRELLIS+</title><p>Viewer coming soon.</p>' > _site/index.html; fi
+          rm -rf _site/.cache-screens
+          if [ -d samples ]; then cp -r samples _site/samples; fi
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
