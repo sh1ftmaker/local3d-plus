@@ -59,17 +59,19 @@ PRESETS = {
                     drop_small_components=0.01),
         decimate=700_000, atlas=4096, ao=True,
     ),
-    # Quality preset: more sampling steps, Heun on the detail stages, sharper remesh, plus trellis_plus mods.
+    # Quality preset: more geometry sampling steps + Heun on the 1536 shape refinement, sharper remesh, mesh repair,
+    # isotropic remesh and photo projection. Texture sampling stays at the stock 12 Euler steps: 20 Heun steps
+    # scored 2.2 dB worse against the input photo (14.7 vs 16.9 PSNR, axe ablation 2026-11-02).
     "plus": dict(
-        ss_steps=20, shape_steps=30, up_steps=20, tex_steps=20,
-        sampler="euler", up_sampler="heun", tex_sampler="heun", upsample_res="1536",
+        ss_steps=20, shape_steps=30, up_steps=20, tex_steps=12,
+        sampler="euler", up_sampler="heun", tex_sampler="euler", upsample_res="1536",
         remesh=dict(resolution=1024, sign={"_key": "udf", "qef": True, "drop_inverted_components": True,
                                            "drop_enclosed_components": True},
                     band=1.0, project_back=0.5, fix_poles=True, smooth_iters=2,
                     drop_small_components=0.01),
         decimate=400_000, atlas=4096, ao=True, plus=True,
         decimate_mode="qem", isotropic=True, repair=True,
-        project_mode="detail", project_strength=1.0, sharpen=0.4,
+        project_mode="replace", project_strength=1.0, sharpen=0.0,   # replace: +1.5 dB; detail/sharpen: no gain
     ),
 }
 
@@ -140,11 +142,11 @@ def build(image_name, preset, model="pixal3d", seed=42, quad=False, quad_faces=2
     if p.get("plus") and p.get("repair", True):
         # Repair the raw dual-contoured surface before remeshing (non-manifold, duplicate, flipped faces).
         remesh_in = g.add("TrellisPlusMeshRepair", mesh=dec[0], remove_small_components=0.002,
-                          close_holes_max_edges=0)[0]
+                          close_holes_max_edges=100)[0]
     remesh = g.add("RemeshMesh", mesh=remesh_in, resolution=r["resolution"], **_flat(dict(r["sign"]), "sign_mode"),
                    band=r["band"], project_back=r["project_back"], fix_poles=r["fix_poles"],
                    smooth_iters=r["smooth_iters"], drop_small_components=r["drop_small_components"],
-                   precluster_max_verts=20_000_000)
+                   precluster_max_verts=p.get("precluster_max_verts", 4_000_000))
     hi = remesh[0]
     if quad:
         low = g.add("TrellisPlusQuadRemesh", mesh=hi, target_faces=quad_faces, crease_angle=0.0,
@@ -223,7 +225,22 @@ def upload(path: Path, host="127.0.0.1:8188"):
         return json.loads(r.read())["name"]
 
 
+def free_models():
+    """Ask ComfyUI to unload all models and drop cached memory (keeps an idle server small)."""
+    try:
+        api("/free", {"unload_models": True, "free_memory": True})
+    except Exception:
+        pass
+
+
 def run(prompt, timeout=3600):
+    try:
+        return _run(prompt, timeout)
+    finally:
+        free_models()
+
+
+def _run(prompt, timeout=3600):
     pid = api("/prompt", {"prompt": prompt, "client_id": "trellis-cli"})["prompt_id"]
     t0 = time.time()
     while time.time() - t0 < timeout:

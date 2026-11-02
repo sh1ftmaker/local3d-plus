@@ -49,14 +49,30 @@ python tools/evaluate.py outputs/<run>/*.glb --sheet sheet.png --front front/
 python tools/publish.py                                     # export runs to samples/ for the viewer
 ```
 
-Memory: bf16 Pixal3D plus the dense intermediate meshes need about 20 GB of system RAM. Run ComfyUI with
-`--cache-none`, or use the INT8 checkpoint on smaller machines.
+### Resource limits (shared machines)
+
+Every heavy job runs in a capped sandbox (`tools/sandbox.sh`): a transient systemd unit with a hard RAM cap
+(default **12 GB**), **no swap** (a swapping job slows every other process; here it is OOM-killed inside its box
+in about a second instead), **8 CPU cores**, nice 10, low IO priority, a process cap, a 3 h time limit and a
+bubblewrap jail (filesystem read-only except the output folders, Hugging Face offline).
+
+```bash
+tools/comfy_sandboxed.sh                 # ComfyUI in the box: --cache-none --disable-pinned-memory --reserve-vram 4
+tools/sandbox.sh run lod -- python tools/lowpoly.py outputs/<run>    # any other job
+tools/sandbox.sh ls | stats NAME | logs NAME | stop NAME
+tools/memmon.sh <pid> <log> <out>        # per-second RSS trace for profiling
+```
+
+Measured footprint: the bf16 Pixal3D stack holds about 16 GB of RAM in ComfyUI before any mesh work, which does
+not fit the 12 GB box. Planned fixes, not applied yet: weights on an SSD with `--fast-disk` (weights become
+reclaimable page cache) and/or the INT8 checkpoint (about 5.4 GB less). The pipeline also unloads all models
+after every job and caps dense-mesh preprocessing at 4M vertices.
 
 ## Repo layout
 
 ```
 trellis_plus/    ComfyUI node pack (folder name kept for compatibility; node ids are TrellisPlus*)
-tools/           pipeline.py, lowpoly.py, split_sheets.py, gen_sheets.sh, evaluate.py, publish.py, gen_test_image.py, web/ (gltf-transform)
+tools/           sandbox.sh, comfy_sandboxed.sh, memmon.sh, pipeline.py, lowpoly.py, split_sheets.py, gen_sheets.sh, evaluate.py, publish.py, gen_test_image.py, web/ (gltf-transform)
 site/            static viewer (GitHub Pages)
 samples/         web-optimised sample runs + index.json (meshopt geometry, WebP textures)
 ```
