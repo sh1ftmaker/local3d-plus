@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-02T20:01:26.906663+00:00",
+ "generated": "2026-11-02T21:14:59.590874+00:00",
  "inputs": [
   {
    "id": "goblin_merchant",
@@ -65,6 +65,102 @@
      "obj": null,
      "size_bytes": 7213284,
      "created": "2026-11-02T19:41:04.512987+00:00"
+    },
+    {
+     "id": "goblin_merchant_plus_pixal3d_default_lod5k",
+     "label": "Low-poly 5k tris (from TRELLIS+ defaults)",
+     "tag": "plus_pixal3d_default_lod5k",
+     "glb": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/model.glb",
+     "crop": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/crop.jpg",
+     "mask": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/mask.png",
+     "meta": {
+      "preset": "lod",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {},
+      "seconds": 40.6,
+      "fov": 31.402294211052055,
+      "source_run": "goblin_merchant_plus_pixal3d_default",
+      "source_preset": "plus",
+      "lod": {
+       "verts": 2440,
+       "faces": 5000,
+       "boundary_edges": 0,
+       "nonmanifold_edges": 0,
+       "tri_quality_mean": 0.8440839388932098,
+       "slivers_pct": 0.0,
+       "budget": 5000,
+       "texel_hit_rate": 0.9357,
+       "source_faces": 493454
+      }
+     },
+     "stats": {
+      "verts": 2440,
+      "faces": 5000,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "tri_quality_mean": 0.8440839380085967,
+      "slivers_pct": 0.0,
+      "psnr": 17.146,
+      "hf_corr": 0.0717,
+      "silhouette_iou": 0.9606,
+      "full_res_faces": 5000
+     },
+     "renders": [
+      "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/turntable.jpg",
+      "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 633216,
+     "created": "2026-11-02T21:11:23.734812+00:00"
+    },
+    {
+     "id": "goblin_merchant_plus_pixal3d_default_lod20k",
+     "label": "Low-poly 20k tris (from TRELLIS+ defaults)",
+     "tag": "plus_pixal3d_default_lod20k",
+     "glb": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod20k/model.glb",
+     "crop": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod20k/crop.jpg",
+     "mask": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod20k/mask.png",
+     "meta": {
+      "preset": "lod",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {},
+      "seconds": 44.5,
+      "fov": 31.402294211052055,
+      "source_run": "goblin_merchant_plus_pixal3d_default",
+      "source_preset": "plus",
+      "lod": {
+       "verts": 9940,
+       "faces": 20000,
+       "boundary_edges": 0,
+       "nonmanifold_edges": 0,
+       "tri_quality_mean": 0.8654714043733438,
+       "slivers_pct": 0.0,
+       "budget": 20000,
+       "texel_hit_rate": 0.992,
+       "source_faces": 493454
+      }
+     },
+     "stats": {
+      "verts": 9940,
+      "faces": 20000,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "tri_quality_mean": 0.8654714045714849,
+      "slivers_pct": 0.0,
+      "psnr": 17.1896,
+      "hf_corr": 0.1283,
+      "silhouette_iou": 0.9691,
+      "full_res_faces": 20000
+     },
+     "renders": [
+      "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod20k/turntable.jpg",
+      "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod20k/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 1774572,
+     "created": "2026-11-02T21:12:08.155533+00:00"
     }
    ]
   },
@@ -308,6 +404,108 @@
      "obj": null,
      "size_bytes": 6861420,
      "created": "2026-11-02T19:26:23.614050+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k",
+     "label": "Low-poly 5k tris (from TRELLIS+ photo projection: replace)",
+     "tag": "plus_pixal3d_C_replace_lod5k",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/mask.png",
+     "meta": {
+      "preset": "lod",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {
+       "project_mode": "replace",
+       "sharpen": 0
+      },
+      "seconds": 28.9,
+      "fov": 38.20699635086812,
+      "source_run": "viking_wolf_rune_axe_plus_pixal3d_C_replace",
+      "source_preset": "plus",
+      "lod": {
+       "verts": 2468,
+       "faces": 5000,
+       "boundary_edges": 0,
+       "nonmanifold_edges": 0,
+       "tri_quality_mean": 0.8430128272605827,
+       "slivers_pct": 0.0,
+       "budget": 5000,
+       "texel_hit_rate": 0.9632,
+       "source_faces": 460798
+      }
+     },
+     "stats": {
+      "verts": 2468,
+      "faces": 5000,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "tri_quality_mean": 0.8430128307028408,
+      "slivers_pct": 0.0,
+      "psnr": 16.3332,
+      "hf_corr": 0.0692,
+      "silhouette_iou": 0.9649,
+      "full_res_faces": 5000
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 697588,
+     "created": "2026-11-02T21:10:10.021454+00:00"
+    },
+    {
+     "id": "viking_wolf_rune_axe_plus_pixal3d_C_replace_lod20k",
+     "label": "Low-poly 20k tris (from TRELLIS+ photo projection: replace)",
+     "tag": "plus_pixal3d_C_replace_lod20k",
+     "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod20k/model.glb",
+     "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod20k/crop.jpg",
+     "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod20k/mask.png",
+     "meta": {
+      "preset": "lod",
+      "model": "pixal3d",
+      "seed": 42,
+      "overrides": {
+       "project_mode": "replace",
+       "sharpen": 0
+      },
+      "seconds": 30.7,
+      "fov": 38.20699635086812,
+      "source_run": "viking_wolf_rune_axe_plus_pixal3d_C_replace",
+      "source_preset": "plus",
+      "lod": {
+       "verts": 9968,
+       "faces": 20000,
+       "boundary_edges": 0,
+       "nonmanifold_edges": 0,
+       "tri_quality_mean": 0.8586675328869507,
+       "slivers_pct": 0.0,
+       "budget": 20000,
+       "texel_hit_rate": 0.995,
+       "source_faces": 460798
+      }
+     },
+     "stats": {
+      "verts": 9968,
+      "faces": 20000,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "tri_quality_mean": 0.858667539409953,
+      "slivers_pct": 0.0,
+      "psnr": 16.2705,
+      "hf_corr": 0.0209,
+      "silhouette_iou": 0.9682,
+      "full_res_faces": 20000
+     },
+     "renders": [
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod20k/turntable.jpg",
+      "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod20k/front_compare.jpg"
+     ],
+     "obj": null,
+     "size_bytes": 1979052,
+     "created": "2026-11-02T21:10:40.575957+00:00"
     }
    ]
   }
@@ -324,6 +522,54 @@
   {
    "title": "goblin baseline",
    "image": "reports/goblin_baseline.jpg"
+  },
+  {
+   "title": "lod goblin merchant",
+   "image": "reports/lod_goblin_merchant.jpg"
+  },
+  {
+   "title": "lod viking wolf rune axe",
+   "image": "reports/lod_viking_wolf_rune_axe.jpg"
+  },
+  {
+   "title": "Input sheet: Anime Girls",
+   "image": "reports/sheet01_anime_girls.jpg"
+  },
+  {
+   "title": "Input sheet: Steampunk Engineers",
+   "image": "reports/sheet02_steampunk_engineers.jpg"
+  },
+  {
+   "title": "Input sheet: Wizards",
+   "image": "reports/sheet03_wizards.jpg"
+  },
+  {
+   "title": "Input sheet: Adventurers",
+   "image": "reports/sheet04_adventurers.jpg"
+  },
+  {
+   "title": "Input sheet: City Infrastructure",
+   "image": "reports/sheet05_city_infrastructure.jpg"
+  },
+  {
+   "title": "Input sheet: Trees",
+   "image": "reports/sheet06_trees.jpg"
+  },
+  {
+   "title": "Input sheet: Towers Landmarks",
+   "image": "reports/sheet07_towers_landmarks.jpg"
+  },
+  {
+   "title": "Input sheet: Steampunk Machines",
+   "image": "reports/sheet08_steampunk_machines.jpg"
+  },
+  {
+   "title": "Input sheet: Fantasy Homes",
+   "image": "reports/sheet09_fantasy_homes.jpg"
+  },
+  {
+   "title": "Input sheet: Fantasy Places",
+   "image": "reports/sheet10_fantasy_places.jpg"
   }
  ]
 }

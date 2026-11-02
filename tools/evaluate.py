@@ -126,12 +126,50 @@ def front_fidelity(m, run_dir, size=1024):
         (side * 255).clip(0, 255).astype(np.uint8)
 
 
+def compare_renders(m_lod, m_src, size=512, views=(0, 45, 90, 135, 180, 225, 270, 315), elev=15):
+    """Render LOD and source textured from the same cameras (framed on the source). Returns PSNR over pixels
+    covered by either, and mean silhouette IoU."""
+    out = {}
+    imgs = {}
+    c = rad = None
+    for key, m in (("src", m_src), ("lod", m_lod)):
+        v, f, tex, uv = _prep(m)
+        if c is None:
+            c = (v.max(0).values + v.min(0).values) / 2
+            rad = float((v - c).norm(dim=1).max())
+        tri = v[f]
+        bvh = _build_triangle_bvh(tri)
+        fov = math.radians(35)
+        dist = rad / math.sin(fov / 2) * 1.05
+        res = []
+        for az in views:
+            a, e = math.radians(az), math.radians(elev)
+            eye = c + dist * torch.tensor([math.sin(a) * math.cos(e), math.sin(e), math.cos(a) * math.cos(e)],
+                                          device=v.device)
+            fw = torch.nn.functional.normalize(c - eye, dim=0)
+            r = torch.nn.functional.normalize(torch.linalg.cross(fw, torch.tensor([0., 1., 0.], device=v.device)), dim=0)
+            u = torch.linalg.cross(r, fw)
+            img, hit, _ = _render_view(tri, bvh, uv, f, tex, eye, fw, r, u, fov, size, size)
+            res.append((img.reshape(size, size, 3).cpu().numpy(), hit.reshape(size, size).cpu().numpy()))
+        imgs[key] = res
+    mse, ious = [], []
+    for (a, ha), (b, hb) in zip(imgs["src"], imgs["lod"]):
+        u = ha | hb
+        a = np.where(ha[..., None], a, 0.12)
+        b = np.where(hb[..., None], b, 0.12)
+        mse.append(((a - b) ** 2)[u].mean())
+        ious.append((ha & hb).sum() / max(1, u.sum()))
+    return {"render_psnr_vs_src": 10 * math.log10(1 / max(float(np.mean(mse)), 1e-10)),
+            "silhouette_iou_vs_src": float(np.mean(ious))}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("files", nargs="+")
     ap.add_argument("--sheet", type=Path)
     ap.add_argument("--size", type=int, default=384)
     ap.add_argument("--front", type=Path, help="write input-camera comparison crops (side by side) here")
+    ap.add_argument("--compare-to", type=Path, help="source GLB: score each file's renders against it")
     a = ap.parse_args()
     report, tiles = {}, []
     for p in a.files:
@@ -150,6 +188,8 @@ def main():
             st.update(fm)
             a.front.mkdir(parents=True, exist_ok=True)
             Image.fromarray(side).save(a.front / f"{Path(p).parent.name}.png")
+        if a.compare_to is not None:
+            st.update(compare_renders(m, load(a.compare_to)[0]))
         report[str(p)] = st
         if a.sheet:
             im = Image.fromarray(render(m, a.size))

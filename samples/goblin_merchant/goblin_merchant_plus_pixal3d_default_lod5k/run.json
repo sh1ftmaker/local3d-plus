@@ -1,0 +1,48 @@
+{
+ "id": "goblin_merchant_plus_pixal3d_default_lod5k",
+ "label": "Low-poly 5k tris (from TRELLIS+ defaults)",
+ "tag": "plus_pixal3d_default_lod5k",
+ "glb": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/model.glb",
+ "crop": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/crop.jpg",
+ "mask": "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/mask.png",
+ "meta": {
+  "preset": "lod",
+  "model": "pixal3d",
+  "seed": 42,
+  "overrides": {},
+  "seconds": 40.6,
+  "fov": 31.402294211052055,
+  "source_run": "goblin_merchant_plus_pixal3d_default",
+  "source_preset": "plus",
+  "lod": {
+   "verts": 2440,
+   "faces": 5000,
+   "boundary_edges": 0,
+   "nonmanifold_edges": 0,
+   "tri_quality_mean": 0.8440839388932098,
+   "slivers_pct": 0.0,
+   "budget": 5000,
+   "texel_hit_rate": 0.9357,
+   "source_faces": 493454
+  }
+ },
+ "stats": {
+  "verts": 2440,
+  "faces": 5000,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "tri_quality_mean": 0.8440839380085967,
+  "slivers_pct": 0.0,
+  "psnr": 17.146,
+  "hf_corr": 0.0717,
+  "silhouette_iou": 0.9606,
+  "full_res_faces": 5000
+ },
+ "renders": [
+  "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/turntable.jpg",
+  "goblin_merchant/goblin_merchant_plus_pixal3d_default_lod5k/front_compare.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 633216,
+ "created": "2026-11-02T21:11:23.734812+00:00"
+}

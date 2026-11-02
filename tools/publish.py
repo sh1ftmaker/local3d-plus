@@ -120,8 +120,12 @@ def export_run(run_dir, stem, force=False):
         obj = f"{stem}/{rid}/quad.obj"
 
     tag = rid[len(stem) + 1:]
+    label = LABELS.get(tag, tag.replace("_", " "))
+    if "_lod" in tag:
+        base, lod = tag.rsplit("_lod", 1)
+        label = f"Low-poly {lod} tris (from {LABELS.get(base, base.replace('_', ' '))})"
     run = {
-        "id": rid, "label": LABELS.get(tag, tag.replace("_", " ")), "tag": tag,
+        "id": rid, "label": label, "tag": tag,
         "glb": f"{stem}/{rid}/model.glb", "crop": crop, "mask": mask, "meta": meta,
         "stats": {**stats, "full_res_faces": stats["faces"]},
         "renders": [f"{stem}/{rid}/turntable.jpg"] + ([f"{stem}/{rid}/front_compare.jpg"]
@@ -162,6 +166,12 @@ def main():
         dst = SAMPLES / "reports" / (rp.stem + ".jpg")
         _jpg(rp, dst, 2048)
         reports.append({"title": rp.stem.replace("_", " "), "image": f"reports/{dst.name}"})
+    for sh in sorted((INPUTS / "sheets").glob("*.png")):
+        dst = SAMPLES / "reports" / (sh.stem + ".jpg")
+        if not dst.exists():
+            _jpg(sh, dst, 2048)
+        title = sh.stem.split("_", 1)[1].replace("_", " ").title() if "_" in sh.stem else sh.stem
+        reports.append({"title": f"Input sheet: {title}", "image": f"reports/{dst.name}"})
     index = {
         "generated": dt.datetime.now(dt.timezone.utc).isoformat(),
         "inputs": [{"id": s, "title": s.replace("_", " ").title(), "image": f"{s}/input.jpg",

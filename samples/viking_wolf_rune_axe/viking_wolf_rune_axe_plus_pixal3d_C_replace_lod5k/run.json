@@ -1,0 +1,51 @@
+{
+ "id": "viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k",
+ "label": "Low-poly 5k tris (from TRELLIS+ photo projection: replace)",
+ "tag": "plus_pixal3d_C_replace_lod5k",
+ "glb": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/model.glb",
+ "crop": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/crop.jpg",
+ "mask": "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/mask.png",
+ "meta": {
+  "preset": "lod",
+  "model": "pixal3d",
+  "seed": 42,
+  "overrides": {
+   "project_mode": "replace",
+   "sharpen": 0
+  },
+  "seconds": 28.9,
+  "fov": 38.20699635086812,
+  "source_run": "viking_wolf_rune_axe_plus_pixal3d_C_replace",
+  "source_preset": "plus",
+  "lod": {
+   "verts": 2468,
+   "faces": 5000,
+   "boundary_edges": 0,
+   "nonmanifold_edges": 0,
+   "tri_quality_mean": 0.8430128272605827,
+   "slivers_pct": 0.0,
+   "budget": 5000,
+   "texel_hit_rate": 0.9632,
+   "source_faces": 460798
+  }
+ },
+ "stats": {
+  "verts": 2468,
+  "faces": 5000,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "tri_quality_mean": 0.8430128307028408,
+  "slivers_pct": 0.0,
+  "psnr": 16.3332,
+  "hf_corr": 0.0692,
+  "silhouette_iou": 0.9649,
+  "full_res_faces": 5000
+ },
+ "renders": [
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/turntable.jpg",
+  "viking_wolf_rune_axe/viking_wolf_rune_axe_plus_pixal3d_C_replace_lod5k/front_compare.jpg"
+ ],
+ "obj": null,
+ "size_bytes": 697588,
+ "created": "2026-11-02T21:10:10.021454+00:00"
+}

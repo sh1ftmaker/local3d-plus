@@ -6,13 +6,14 @@ from comfy_api.latest import ComfyExtension, IO
 from .mesh_ops import (TrellisPlusMeshRepair, TrellisPlusIsotropicRemesh, TrellisPlusQuadRemesh,
                        TrellisPlusSaveQuadOBJ)
 from .texture_ops import TrellisPlusProjectImageTexture, TrellisPlusTextureEnhance
+from .lod import TrellisPlusLowPolyLOD
 
 
 class TrellisPlusExtension(ComfyExtension):
     @override
     async def get_node_list(self) -> list[type[IO.ComfyNode]]:
         return [TrellisPlusMeshRepair, TrellisPlusIsotropicRemesh, TrellisPlusQuadRemesh, TrellisPlusSaveQuadOBJ,
-                TrellisPlusProjectImageTexture, TrellisPlusTextureEnhance]
+                TrellisPlusProjectImageTexture, TrellisPlusTextureEnhance, TrellisPlusLowPolyLOD]
 
 
 async def comfy_entrypoint() -> TrellisPlusExtension:
