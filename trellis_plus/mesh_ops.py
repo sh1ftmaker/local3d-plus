@@ -119,8 +119,8 @@ class TrellisPlusMeshRepair(IO.ComfyNode):
     def define_schema(cls):
         return IO.Schema(
             node_id="TrellisPlusMeshRepair",
-            display_name="Mesh Repair (Trellis+)",
-            category="3d/trellis_plus",
+            display_name="Mesh Repair (Local3D+)",
+            category="3d/local3d_plus",
             description="pymeshlab repair: merges duplicate vertices/faces, removes zero-area and non-manifold "
                         "faces, drops floating fragments, optionally closes small holes, and makes winding "
                         "consistent. Run on the raw decoded mesh before Remesh (SDF mode needs consistent winding). "
@@ -174,8 +174,8 @@ class TrellisPlusIsotropicRemesh(IO.ComfyNode):
     def define_schema(cls):
         return IO.Schema(
             node_id="TrellisPlusIsotropicRemesh",
-            display_name="Isotropic Remesh (Trellis+)",
-            category="3d/trellis_plus",
+            display_name="Isotropic Remesh (Local3D+)",
+            category="3d/local3d_plus",
             description="Feature-preserving isotropic remesh (split/collapse/flip/relax + reprojection). Turns "
                         "the slivers and fans of a decimated mesh into even, near-equilateral triangles, "
                         "which bake, unwrap, subdivide and deform better. Keeps creases above feature_angle.",
@@ -269,10 +269,10 @@ class TrellisPlusQuadRemesh(IO.ComfyNode):
         return IO.Schema(
             node_id="TrellisPlusQuadRemesh",
             display_name="Quad Remesh (Instant Meshes, Trellis+)",
-            category="3d/trellis_plus",
+            category="3d/local3d_plus",
             description="Quad-dominant retopology with a 4-RoSy/4-PoSy field (Instant Meshes), then vertices are "
                         "snapped back onto the dense surface. Output is triangulated (glTF has no quads) with each "
-                        "quad split along its short diagonal; Save Quad OBJ (Trellis+) recombines them. Bake normal "
+                        "quad split along its short diagonal; Save Quad OBJ (Local3D+) recombines them. Bake normal "
                         "maps from the dense mesh to recover detail.",
             inputs=[
                 IO.Mesh.Input("mesh"),
@@ -393,8 +393,8 @@ class TrellisPlusSaveQuadOBJ(IO.ComfyNode):
     def define_schema(cls):
         return IO.Schema(
             node_id="TrellisPlusSaveQuadOBJ",
-            display_name="Save Quad OBJ (Trellis+)",
-            category="3d/trellis_plus",
+            display_name="Save Quad OBJ (Local3D+)",
+            category="3d/local3d_plus",
             description="Writes an OBJ with triangle pairs recombined into quads (positions welded across UV "
                         "seams, UVs kept per-corner), plus an MTL with base color / roughness-metallic / normal "
                         "maps when present. Use after Quad Remesh for a DCC-friendly quad mesh.",
@@ -444,7 +444,7 @@ class TrellisPlusSaveQuadOBJ(IO.ComfyNode):
                     tex_files[suffix] = base + suffix + ".png"
             n_quads = sum(1 for p in polys if len(p) == 4)
             with open(obj_path, "w") as fh:
-                fh.write(f"# TRELLIS+ quad export: {n_quads} quads, {len(polys) - n_quads} tris\n")
+                fh.write(f"# Local3D+ quad export: {n_quads} quads, {len(polys) - n_quads} tris\n")
                 if tex_files:
                     fh.write(f"mtllib {mtl_name}\n")
                 for p in upos:

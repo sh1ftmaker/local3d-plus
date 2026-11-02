@@ -241,8 +241,8 @@ class TrellisPlusProjectImageTexture(IO.ComfyNode):
     def define_schema(cls):
         return IO.Schema(
             node_id="TrellisPlusProjectImageTexture",
-            display_name="Project Input Photo onto Texture (Trellis+)",
-            category="3d/trellis_plus",
+            display_name="Project Input Photo onto Texture (Local3D+)",
+            category="3d/local3d_plus",
             description="Pixal3D generates geometry pixel-aligned to its input camera, so the full-resolution "
                         "input photo can be projected back onto the visible part of the UV atlas. Handles "
                         "occlusion (ray-cast depth), grazing angles and silhouette/occlusion-edge feathering. "
@@ -299,8 +299,8 @@ class TrellisPlusTextureEnhance(IO.ComfyNode):
     def define_schema(cls):
         return IO.Schema(
             node_id="TrellisPlusTextureEnhance",
-            display_name="Texture Enhance (Trellis+)",
-            category="3d/trellis_plus",
+            display_name="Texture Enhance (Local3D+)",
+            category="3d/local3d_plus",
             description="Chart-aware unsharp mask for a baked atlas (counters the trilinear voxel-sampling blur), "
                         "then re-fills the UV gutters from the nearest chart texel so seams and mip-maps don't "
                         "bleed. Sharpening only affects texels inside UV charts.",

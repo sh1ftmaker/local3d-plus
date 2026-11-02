@@ -1,64 +1,71 @@
-# TRELLIS+ : quality mods for TRELLIS.2 / Pixal3D in ComfyUI
+# Local3D+: run Pixal3D locally, with quality mods
 
-**Live sample viewer: https://sh1ftmaker.github.io/trellis-plus/** (input images vs. generated models, baseline vs. mods)
+**Live sample viewer: https://sh1ftmaker.github.io/local3d-plus/** (input photos vs generated models, stock vs mods;
+works on phones)
 
-A ComfyUI node pack plus a headless pipeline that sits on top of ComfyUI's native TRELLIS.2 / Pixal3D nodes and
-targets the three weak spots of image-to-3D output: mesh cleanliness, topology, and texture fidelity.
-Install: clone into `ComfyUI/custom_nodes/` (or symlink `trellis_plus/`), then `pip install pymeshlab pynanoinstantmeshes`.
+[**Pixal3D**](https://github.com/TencentARC/Pixal3D) (SIGGRAPH 2026, Tsinghua University & Tencent ARC Lab) is the
+best open image-to-3D model we have tested. It lifts pixel features into 3D by back-projection, so the generated
+asset is *pixel-aligned* with the input photo. Local3D+ is an **unofficial** community toolkit for running Pixal3D
+locally in ComfyUI, through ComfyUI's native Pixal3D / TRELLIS.2 nodes. It adds a node pack aimed at what the raw
+output still lacks: clean meshes, game-friendly topology, and textures that match the photo.
 
-## Local layout (author's machine)
+> Not affiliated with the Pixal3D or TRELLIS.2 authors. All credit for the models goes to them; see Credits.
 
-```
-models/            weights (single copy, ~24 GB), registered in ComfyUI via extra_model_paths.yaml
-  diffusion_models/  pixal3d_bf16, trellis_2_bf16
-  vae/               trellis_2_shape_vae_bf16, trellis_2_texture_vae_bf16
-  clip_vision/       dino_v3_L_naf_fp32
-  geometry_estimation/ moge_2_vitl_normal_fp16      background_removal/ birefnet
-trellis_plus/      ComfyUI node pack (symlinked as ComfyUI/custom_nodes/trellis_plus)
-tools/pipeline.py  headless runner (baseline / plus presets, optional quad retopo)
-tools/evaluate.py  topology metrics + turntable render sheet for GLB/OBJ outputs
-tools/gen_test_image.py  make a test input with the local Qwen-Image 2.1
-workflows/         API-format prompts (drag into ComfyUI to load)
-outputs/ reports/  results and comparison sheets
-```
+## What it adds
 
-ComfyUI lives at `/bigdata/agent-tom/qwen-image/ComfyUI` (TRELLIS.2 is native there, no extra install).
-`extra_model_paths.yaml` in that folder points ComfyUI at `models/` here.
+| Node (category `3d/local3d_plus`) | What it fixes |
+|---|---|
+| **Mesh Repair** | Raw decoder output has inconsistent winding, duplicate and non-manifold faces, and floating fragments (one asset had 325k non-manifold edges). A pymeshlab repair pass makes the winding consistent so SDF / QEF remeshing works. |
+| **Isotropic Remesh** | Turns the slivers and fans left by decimation into even, near-equilateral triangles (mean triangle quality 0.81 → 0.86). |
+| **Quad Remesh (Instant Meshes)** + **Save Quad OBJ** | Pure-quad retopology snapped back onto the surface. The OBJ export restores the exact quads and never merges across a UV seam. |
+| **Project Input Photo onto Texture** | Uses Pixal3D's pixel alignment to project the full-resolution photo onto visible texels, with ray-cast occlusion, facing and edge feathering, and silhouette-IoU auto-alignment. `replace` mode measurably improves photo fidelity. |
+| **Texture Enhance** | Chart-aware unsharp mask plus gutter re-fill. Off by default: it did not improve photo fidelity in tests. |
 
-## Running
+Measured results, including those where a mod did *not* help, are on the viewer's stats tab and in
+`samples/*/*/run.json`.
+
+## Use
+
+Requirements: ComfyUI ≥ 0.34 with the native Pixal3D nodes, plus these weights from
+[Comfy-Org/Pixal3D](https://huggingface.co/Comfy-Org/Pixal3D), [Comfy-Org/MoGe](https://huggingface.co/Comfy-Org/MoGe)
+and [Comfy-Org/BiRefNet](https://huggingface.co/Comfy-Org/BiRefNet): `pixal3d_bf16` (or `_int8_convrot`),
+`trellis_2_shape_vae_bf16`, `trellis_2_texture_vae_bf16`, `dino_v3_L_naf_fp32`, `moge_2_vitl_normal_fp16` and
+`birefnet`. Put them in ComfyUI's model folders or in any folder registered in `extra_model_paths.yaml`.
 
 ```bash
-# start ComfyUI (if the qwen-image service isn't already running it)
-sbg start comfy --mem 20G -- /bigdata/agent-tom/qwen-image/venv/bin/python /bigdata/agent-tom/qwen-image/ComfyUI/main.py --listen 127.0.0.1 --port 8188 --reserve-vram 2 --cache-none   # cache-none: dense meshes in the output cache exceed RAM
+git clone https://github.com/sh1ftmaker/local3d-plus
+ln -s "$PWD/local3d-plus/trellis_plus" ComfyUI/custom_nodes/local3d_plus
+pip install pymeshlab pynanoinstantmeshes trimesh
 
-PY=/bigdata/agent-tom/qwen-image/venv/bin/python
-$PY tools/pipeline.py photo.png                    # quality preset (Pixal3D)
-$PY tools/pipeline.py photo.png --quad --quad-faces 20000   # + quad retopology, OBJ with quads
-$PY tools/pipeline.py photo.png --preset baseline  # stock Comfy-Org template settings
-$PY tools/pipeline.py photo.png --model trellis2   # TRELLIS.2 instead of Pixal3D (no photo projection)
-$PY tools/evaluate.py outputs/<run>/*.glb --sheet reports/x.png
+# headless runs against a local ComfyUI on :8188
+python tools/pipeline.py photo.png                          # Local3D+ preset
+python tools/pipeline.py photo.png --preset baseline        # stock template settings
+python tools/pipeline.py photo.png --quad --quad-faces 20000
+python tools/pipeline.py photo.png --set project_mode=replace --set sharpen=0   # override any preset value
+python tools/evaluate.py outputs/<run>/*.glb --sheet sheet.png --front front/
+python tools/publish.py                                     # export runs to samples/ for the viewer
 ```
 
-## Nodes (category `3d/trellis_plus`)
+Memory: bf16 Pixal3D plus the dense intermediate meshes need about 20 GB of system RAM. Run ComfyUI with
+`--cache-none`, or use the INT8 checkpoint on smaller machines.
 
-| Node | What it fixes |
-|---|---|
-| **Mesh Repair** | Raw decoder output has inconsistent winding, duplicate and non-manifold faces and floating fragments. pymeshlab repair pass; makes winding consistent so the native SDF remesh / QEF sharp-feature mode becomes usable. |
-| **Isotropic Remesh** | QEM decimation leaves slivers and fans. Feature-preserving isotropic remesh (split / collapse / flip / relax + reprojection) at about the same face count gives even, near-equilateral triangles that unwrap, bake and deform better. |
-| **Quad Remesh (Instant Meshes)** | Pure-quad retopology with a 4-RoSy/4-PoSy field, vertices snapped back onto the dense surface. Optional crease alignment for hard-surface. Output is triangulated for glTF in quad order. |
-| **Save Quad OBJ** | Restores the exact quads (triangle pairs survive UnwrapMesh in order, verified per pair; greedy fallback otherwise), never across a UV seam. Writes MTL + base color / normal / ORM textures. |
-| **Project Input Photo onto Texture** | Pixal3D is pixel-aligned with its input camera, so the full-res photo is projected onto visible texels: ray-cast occlusion, facing-angle and edge feathering, silhouette-IoU auto-alignment (skips if the fit is poor). `detail` mode transfers photo high-frequencies; `replace` blends in the colour-matched photo. |
-| **Texture Enhance** | Chart-aware unsharp mask (coverage-normalised blur so gutters don't leak in) + JFA gutter re-fill. |
+## Repo layout
 
-The `plus` preset also changes sampling (more steps, Heun on the 1536 refinement and texture stages) and
-remeshing (1024 grid, QEF, inverted/enclosed shell removal, pole fixing, light Taubin smoothing, project-back)
-and decimates with feature-edge-weighted QEM.
+```
+trellis_plus/    ComfyUI node pack (folder name kept for compatibility; node ids are TrellisPlus*)
+tools/           pipeline.py, evaluate.py, publish.py, gen_test_image.py, web/ (gltf-transform)
+site/            static viewer (GitHub Pages)
+samples/         web-optimised sample runs + index.json (meshopt geometry, WebP textures)
+```
 
-## Samples
+## Credits
 
-`samples/` holds web versions of pipeline runs (meshopt-compressed GLB, 2K WebP textures, full topology), exported
-with `tools/publish.py`; full-res and raw meshes are not committed. Test inputs: `viking_wolf_rune_axe.png` from
-[Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) (MIT); `goblin_merchant.png`
-generated locally with Qwen-Image 2.1.
+- **Pixal3D** by Dong-Yang Li, Wang Zhao, Yuxin Chen, Wenbo Hu, Meng-Hao Guo, Fang-Lue Zhang, Ying Shan and Shi-Min Hu:
+  [code](https://github.com/TencentARC/Pixal3D) (MIT), [project page](https://ldyang694.github.io/projects/pixal3d/)
+- **TRELLIS.2** (Microsoft, MIT), the backbone Pixal3D builds on: https://github.com/microsoft/TRELLIS.2
+- **ComfyUI / Comfy-Org** for the native Pixal3D + TRELLIS.2 integration and the repackaged weights.
+- Instant Meshes (via pynanoinstantmeshes), PyMeshLab, MoGe, BiRefNet, three.js and glTF-Transform.
+- Test inputs: `viking_wolf_rune_axe.png` from [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates)
+  (MIT); `goblin_merchant.png` was generated locally with Qwen-Image 2.1.
 
-Built on [TRELLIS.2](https://github.com/microsoft/TRELLIS.2) (MIT), Pixal3D, and ComfyUI's native integration.
+MIT licensed.

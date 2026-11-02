@@ -1,4 +1,4 @@
-"""TRELLIS+ : mesh, topology and texture quality mods for ComfyUI's native TRELLIS.2 / Pixal3D nodes."""
+"""Local3D+ : mesh, topology, LOD and texture quality mods for ComfyUI's native Pixal3D / TRELLIS.2 nodes."""
 from typing_extensions import override
 
 from comfy_api.latest import ComfyExtension, IO

@@ -106,9 +106,10 @@ function groupImageUrl(g) { return g?.image?.url || null; }
 
 // what each preset changes (shown per run)
 const PRESET_NOTES = {
-  baseline: 'Stock ComfyUI TRELLIS.2 template settings, no TRELLIS+ mods.',
-  plus: 'TRELLIS+ mods: mesh repair, inverted-shell removal, QEF remesh, feature-weighted decimation, isotropic remesh, photo-to-texture projection and texture enhance; more steps and Heun sampling.',
-  quality: 'TRELLIS+ quality preset.',
+  baseline: 'Stock ComfyUI Pixal3D template settings, no Local3D+ mods.',
+  plus: 'Local3D+ mods: mesh repair, inverted-shell removal, QEF remesh, isotropic remesh and photo-to-texture projection; more steps and Heun sampling.',
+  quality: 'Local3D+ quality preset.',
+  lod: 'Low-poly LOD: simplified to a triangle budget, re-unwrapped, with base color and normal map re-baked from the full-resolution model.',
 };
 function runNote(run) {
   const m = run.meta || {};
